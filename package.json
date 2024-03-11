@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vite preview",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vite build",
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint --fix ./src --ext .js,.jsx,.ts,.tsx,.js,.vue",
+    "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
     "leaflet": "^1.5.1",
@@ -16,42 +18,34 @@
     "moment": "^2.20.1",
     "osm-auth": "^1.0.2",
     "osmtogeojson": "^3.0.0-beta.3",
-    "vue": "^2.6.11",
+    "vue": "^2.7.7",
     "vue-analytics": "^5.17.2",
     "vue-i18n": "^8.15.3",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.5.4",
     "vuetify": "^1.5.7",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@types/node": "^16.11.45",
+    "@vitejs/plugin-legacy": "^2.0.0",
+    "@vitejs/plugin-vue2": "^1.1.2",
+    "@vitejs/plugin-vue2-jsx": "^1.0.2",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^11.0.0",
+    "@vue/tsconfig": "^0.1.3",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^9.0.0",
     "font-awesome": "^4.7.0",
     "material-design-icons-iconfont": "^5.0.1",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+    "vite-plugin-vue2": "1.9.0",
+    "vue-template-compiler": "^2.6.11",
+    "prettier": "^2.5.1",
+    "terser": "^5.14.2",
+    "typescript": "~4.7.4",
+    "vite": "^3.0.2",
+    "vue-tsc": "^0.38.8"
   },
   "browserslist": [
     "> 1%",
