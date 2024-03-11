@@ -52,7 +52,7 @@ export default {
             return query.nodeByTags(tags, bbox).body;
         },
         fetchAmenity: function (center, callback, errorCallback) {
-            fetch(process.env.VUE_APP_OVERPASS_URL, {
+            fetch(import.meta.env.VITE_APP_OVERPASS_URL, {
                 method: 'POST',
                 body: this.buildQuery(center)
             })
@@ -73,7 +73,7 @@ export default {
             else {
                 query.nodeById(params.node);
             }
-            fetch(process.env.VUE_APP_OVERPASS_URL, {
+            fetch(import.meta.env.VITE_APP_OVERPASS_URL, {
                 method: 'POST',
                 body: query.body
             })

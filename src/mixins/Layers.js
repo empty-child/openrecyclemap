@@ -2,14 +2,14 @@ export default {
     methods: {
         mapboxVector: function () {
             return L.mapboxGL({
-                accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
+                accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
                 style: 'mapbox://styles/mapbox/bright-v8',
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
             });
         },
         brightVector: function () {
             return L.mapboxGL({
-                accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
+                accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
                 style: 'https://raw.githubusercontent.com/osm2vectortiles/mapbox-gl-styles/master/styles/bright-v9-cdn.json'
             });
         },
@@ -18,7 +18,7 @@ export default {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 21,
                 id: 'mapbox.streets',
-                accessToken: process.env.VUE_APP_MAPBOX_TOKEN
+                accessToken: import.meta.env.VITE_MAPBOX_TOKEN
             });
         },
         mapnikLayer: function () {
@@ -41,8 +41,8 @@ export default {
                 base: 'aerial',
                 type: 'maptile',
                 scheme: 'satellite.day',
-                app_id: process.env.VUE_APP_HERE_ID,
-                app_code: process.env.VUE_APP_HERE_APPCODE,
+                app_id: import.meta.env.VITE_HERE_ID,
+                app_code: import.meta.env.VITE_HERE_APPCODE,
                 mapID: 'newest',
                 maxZoom: 20,
                 language: 'eng',
@@ -57,7 +57,7 @@ export default {
                 url: 'MapboxSat',
                 attribution: 'Tiles <a href="http://mapbox.com/about/maps/">MapBox</a>',
                 subdomains: 'abcd',
-                accessToken: process.env.VUE_APP_MAPBOX_TOKEN
+                accessToken: import.meta.env.VITE_MAPBOX_TOKEN
             });
         },
         esriSat: function () {

@@ -167,12 +167,12 @@ export default {
         },
         authInit: function () {
             this.auth = osmAuth({
-                oauth_consumer_key: process.env.VUE_APP_OSM_CONSUMER_KEY,
-                oauth_secret: process.env.VUE_APP_OSM_SECRET,
+                oauth_consumer_key: import.meta.env.VITE_APP_OSM_CONSUMER_KEY,
+                oauth_secret: import.meta.env.VITE_APP_OSM_SECRET,
                 auto: true,
                 singlepage: true,
                 landing: 'land',
-                url: process.env.VUE_APP_OSM_API_URL
+                url: import.meta.env.VITE_APP_OSM_API_URL
             });
             this.authenticated = this.auth.authenticated();
             if(this.authenticated) {

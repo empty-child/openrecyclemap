@@ -1,37 +1,46 @@
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import Vue from "vue";
+import VueI18n from "vue-i18n";
 
 Vue.use(VueI18n);
 
 const getNavigatorLanguage = () => {
-    if (navigator.languages && navigator.languages.length) {
-        return navigator.languages[0];
-    } else {
-        return navigator.userLanguage || navigator.language || navigator.browserLanguage || 'en';
-    }
+  if (navigator.languages && navigator.languages.length) {
+    return navigator.languages[0];
+  } else {
+    return (
+      navigator.userLanguage ||
+      navigator.language ||
+      navigator.browserLanguage ||
+      "en"
+    );
+  }
 };
 
-function loadLocaleMessages () {
-    const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.json$/i);
-    const messages = {};
-    locales.keys().forEach(key => {
-        const matched = key.match(/([A-Za-z0-9-_]+)\./i);
-        if (matched && matched.length > 1) {
-            const locale = matched[1];
-            messages[locale] = locales(key);
-        }
-    });
-    return messages;
+function loadLocaleMessages() {
+  const locales = import.meta.globEager(`./locales/*.json`);
+  const messages = {};
+  Object.keys(locales).forEach((key) => {
+    const matched = key.match(/\/([A-Za-z0-9-_]{2})\./i);
+    if (matched && matched.length > 1) {
+      try {
+        const locale = matched[1];
+        messages[locale] = locales[key];
+      } catch (e) {
+        console.error("e", e);
+      }
+    }
+  });
+  return messages;
 }
 
-const storageLanguage = localStorage.getItem('lang');
+const storageLanguage = localStorage.getItem("lang");
 const userLanguage = storageLanguage || getNavigatorLanguage().slice(0, 2);
 
 /*
  * For translations use https://poeditor.com/projects/view?id=333387
  */
 export default new VueI18n({
-    locale: userLanguage,
-    fallbackLocale: 'en',
-    messages: loadLocaleMessages()
-})
+  locale: userLanguage,
+  fallbackLocale: "en",
+  messages: loadLocaleMessages(),
+});
