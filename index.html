@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
     <meta name="description" content="OpenRecycleMap − карта контейнеров для вторичной переработки мусора">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <title>Open Recycle Map</title>
 
     <link rel="preconnect" href="https://www.google-analytics.com">
@@ -17,7 +17,7 @@
 
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
+            navigator.serviceWorker.register('./service-worker.js')
                 .then(function(reg) {
                     console.log("worker was registered");
                 })
@@ -29,6 +29,6 @@
 </head>
 <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

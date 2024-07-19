@@ -7,18 +7,15 @@ const getNavigatorLanguage = () => {
   if (navigator.languages && navigator.languages.length) {
     return navigator.languages[0];
   } else {
-    return (
-      navigator.userLanguage ||
-      navigator.language ||
-      navigator.browserLanguage ||
-      "en"
-    );
+    return navigator.language || "en";
   }
 };
 
 function loadLocaleMessages() {
-  const locales = import.meta.globEager(`./locales/*.json`);
-  const messages = {};
+  const locales: Record<string, VueI18n.LocaleMessages> = import.meta.globEager(
+    `./locales/*.json`
+  );
+  const messages: VueI18n.LocaleMessages = {};
   Object.keys(locales).forEach((key) => {
     const matched = key.match(/\/([A-Za-z0-9-_]{2})\./i);
     if (matched && matched.length > 1) {

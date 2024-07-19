@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vite preview",
+    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vite",
     "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vite build",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint --fix ./src --ext .js,.jsx,.ts,.tsx,.js,.vue",
@@ -27,6 +27,9 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
+    "@types/leaflet": "^1.9.12",
+    "@types/leaflet.locatecontrol": "^0.74.5",
+    "@types/mapbox-gl": "^3.1.0",
     "@types/node": "^16.11.45",
     "@vitejs/plugin-legacy": "^2.0.0",
     "@vitejs/plugin-vue2": "^1.1.2",
@@ -39,17 +42,12 @@
     "eslint-plugin-vue": "^9.0.0",
     "font-awesome": "^4.7.0",
     "material-design-icons-iconfont": "^5.0.1",
-    "vite-plugin-vue2": "1.9.0",
-    "vue-template-compiler": "^2.6.11",
     "prettier": "^2.5.1",
     "terser": "^5.14.2",
     "typescript": "~4.7.4",
     "vite": "^3.0.2",
+    "vite-plugin-vue2": "1.9.0",
+    "vue-template-compiler": "^2.6.11",
     "vue-tsc": "^0.38.8"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  }
 }
