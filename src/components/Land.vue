@@ -1,62 +1,64 @@
 <template>
-    <div class="text-xs-center land-container">
-        <v-progress-circular
-                :size="70"
-                :width="7"
-                color="primary"
-                indeterminate
-        ></v-progress-circular>
-    </div>
+  <div class="text-xs-center land-container">
+    <v-progress-circular
+      :size="70"
+      :width="7"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>
+  </div>
 </template>
 
 <script>
-    import oauthMixin from '../mixins/Oauth'
+import oauthMixin from "../mixins/Oauth";
 
-    export default {
-        mixins: [oauthMixin],
-        methods: {
-            parseToken: function () {
-                function stringQs(str) {
-                    return str.split('&').filter(function (pair) {
-                        return pair !== '';
-                    }).reduce(function(obj, pair){
-                        let parts = pair.split('=');
-                        obj[decodeURIComponent(parts[0])] = (null === parts[1]) ?
-                            '' : decodeURIComponent(parts[1]);
-                        return obj;
-                    }, {});
-                }
-                let path = window.location.href.split('?')[1];
-                if(!path) {
-                    return null;
-                }
-                return stringQs(path).oauth_token;
-            }
-        },
-        created() {
-            this.authInit();
-            let router = this.$router;
-            let token = this.parseToken();
-            if(token) {
-                this.$ga.event({
-                    eventCategory: 'auth',
-                    eventAction: 'auth_ok',
-                    eventLabel: 'auth_ok',
-                    eventValue: 1
-                });
-                this.auth.bootstrapToken(token, function(err, oauth) {
-                    router.replace({name: 'about'});
-                });
-            }
-            else {
-                router.replace({name: 'about'});
-            }
-        }
+export default {
+  mixins: [oauthMixin],
+  methods: {
+    parseToken: function () {
+      function stringQs(str) {
+        return str
+          .split("&")
+          .filter(function (pair) {
+            return pair !== "";
+          })
+          .reduce(function (obj, pair) {
+            const parts = pair.split("=");
+            obj[decodeURIComponent(parts[0])] =
+              null === parts[1] ? "" : decodeURIComponent(parts[1]);
+            return obj;
+          }, {});
+      }
+      const path = window.location.href.split("?")[1];
+      if (!path) {
+        return null;
+      }
+      return stringQs(path).oauth_token;
+    },
+  },
+  created() {
+    this.authInit();
+    const router = this.$router;
+    const token = this.parseToken();
+    if (token) {
+      this.$ga.event({
+        eventCategory: "auth",
+        eventAction: "auth_ok",
+        eventLabel: "auth_ok",
+        eventValue: 1,
+      });
+      this.auth.bootstrapToken(token, function (err, oauth) {
+        router.replace({ name: "about" });
+      });
+    } else {
+      router.replace({ name: "about" });
     }
+  },
+};
 </script>
 
 <style>
-    .land-container {
-        padding: 100px 0;
-    }
+.land-container {
+  padding: 100px 0;
+}
 </style>
