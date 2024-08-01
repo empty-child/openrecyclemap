@@ -13,5 +13,7 @@ module.exports = {
     "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier",
   ],
-  rules: {},
+  rules: {
+    "vue/multi-word-component-names": "off",
+  },
 };

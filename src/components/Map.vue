@@ -132,7 +132,6 @@ export default {
       if (!data) {
         return;
       }
-      const component = this;
       const map = this.map;
       this.lastData = data;
       if (this.layer) {
@@ -178,29 +177,29 @@ export default {
         onEachFeature: function (feature, layer) {
           layer.on("click", function (ev) {
             L.DomEvent.stopPropagation(ev);
-            if (component.add_mode || component.edit_tags) {
+            if (this.add_mode || this.edit_tags) {
               return;
             }
-            if (component.selectedLayer) {
-              component.selectedLayer.setStyle({
+            if (this.selectedLayer) {
+              this.selectedLayer.setStyle({
                 weight: 1,
               });
             }
             const geoJsonProps = feature.properties;
             const sel_type = geoJsonProps.id.includes("way") ? "way" : "node";
             const sel_id = geoJsonProps.id.replace(sel_type + "/", "");
-            component.selectedLayer = layer;
-            component.selected = {
+            this.selectedLayer = layer;
+            this.selected = {
               props: geoJsonProps,
-              fractions: component.parseFractions(geoJsonProps),
+              fractions: this.parseFractions(geoJsonProps),
               node_id: sel_id,
               node_type: sel_type,
             };
-            component.selectedId = sel_id;
+            this.selectedId = sel_id;
             layer.setStyle({
               weight: 5,
             });
-            component.$router.push({
+            this.$router.push({
               name: "node",
               params: { node: sel_id, type: sel_type },
             });
@@ -392,27 +391,29 @@ export default {
       }
     },
     loadNode: function (params) {
-      const component = this;
       this.fetchNode(params, function (data) {
         if (data.elements.length > 0) {
           const element = data.elements[0];
           const node = element.type === "way" ? element.center : element;
-          component.map.setView([node.lat, node.lon], 17, { animate: false });
-          component.loadData(params);
+          this.map.setView([node.lat, node.lon], 17, { animate: false });
+          this.loadData(params);
         }
       });
     },
     parseFractions: function (geoJsonProps) {
       const nodeTypes = [];
       if (
-        geoJsonProps.hasOwnProperty("amenity") &&
+        Object.prototype.hasOwnProperty.call(geoJsonProps, "amenity") &&
         geoJsonProps["amenity"] === "waste_disposal"
       ) {
         nodeTypes.push("waste_disposal");
       } else {
         for (const key in this.labels) {
           if (
-            geoJsonProps.hasOwnProperty("recycling:" + key) &&
+            Object.prototype.hasOwnProperty.call(
+              geoJsonProps,
+              "recycling:" + key
+            ) &&
             geoJsonProps["recycling:" + key] === "yes"
           ) {
             nodeTypes.push(key);

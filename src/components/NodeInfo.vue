@@ -3,12 +3,15 @@
     <span class="p_close" @click="closePopup">×</span>
 
     <div class="f_list">
-      <span v-for="item in fractions" :class="['p_fraction', 'ico_' + item]">{{
-        labels[item]
-      }}</span>
+      <span
+        v-for="item in fractions"
+        :key="item"
+        :class="['p_fraction', 'ico_' + item]"
+        >{{ labels[item] }}</span
+      >
     </div>
     <table v-if="info || !fractions.length">
-      <tr v-for="(item, key) in all_tags" class="node_info_tr">
+      <tr v-for="(item, key) in all_tags" :key="key" class="node_info_tr">
         <td>{{ key }}</td>
         <td>{{ item }}</td>
       </tr>
@@ -96,7 +99,7 @@ export default {
       this.description = geoJsonProps.description;
       this.amenity = geoJsonProps.amenity;
       this.centre =
-        geoJsonProps.hasOwnProperty("recycling_type") &&
+        Object.prototype.hasOwnProperty.call(geoJsonProps, "recycling_type") &&
         geoJsonProps.recycling_type === "centre";
       this.name = geoJsonProps.name;
     }

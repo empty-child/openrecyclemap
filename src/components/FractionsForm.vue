@@ -51,13 +51,15 @@
       <div class="tags_box" v-if="!waste_disposal">
         <div class="node_tags">
           <div class="box_title">{{ $t("message.selected") }}</div>
-          <span
-            v-for="(value, key) in recycling"
-            v-if="value"
-            :class="['p_fraction', 'ico_' + key]"
-            @click="recycling[key] = !recycling[key]"
-            >{{ labels[key] }}</span
-          >
+          <div v-if="value">
+            <span
+              v-for="(value, key) in recycling"
+              :key="key"
+              :class="['p_fraction', 'ico_' + key]"
+              @click="recycling[key] = !recycling[key]"
+              >{{ labels[key] }}</span
+            >
+          </div>
 
           <div v-if="!isRecycling" class="tags_not_selected">
             {{ $t("message.selectFractions") }}
@@ -65,13 +67,15 @@
         </div>
         <div class="f_list f_list_add">
           <div class="box_title">{{ $t("message.available") }}</div>
-          <span
-            v-for="(value, key) in recycling"
-            v-if="!value"
-            :class="['p_fraction', 'ico_' + key]"
-            @click="recycling[key] = !recycling[key]"
-            >{{ labels[key] }}</span
-          >
+          <div v-if="!value">
+            <span
+              v-for="(value, key) in recycling"
+              :key="key"
+              :class="['p_fraction', 'ico_' + key]"
+              @click="recycling[key] = !recycling[key]"
+              >{{ labels[key] }}</span
+            >
+          </div>
         </div>
       </div>
       <div v-if="!waste_disposal" class="description_box">
@@ -127,7 +131,10 @@ export default {
   computed: {
     isRecycling: function () {
       for (const key in this.recycling) {
-        if (this.recycling.hasOwnProperty(key) && this.recycling[key]) {
+        if (
+          Object.prototype.hasOwnProperty.call(this.recycling, key) &&
+          this.recycling[key]
+        ) {
           return true;
         }
       }
@@ -157,7 +164,10 @@ export default {
       }
       if (!this.waste_disposal) {
         for (const key in this.recycling) {
-          if (this.recycling.hasOwnProperty(key) && this.recycling[key]) {
+          if (
+            Object.prototype.hasOwnProperty.call(this.recycling, key) &&
+            this.recycling[key]
+          ) {
             tags["recycling:" + key] = "yes";
           }
         }
@@ -192,7 +202,7 @@ export default {
     if (this.selected) {
       const geoJsonProps = this.selected.props;
       const centre =
-        geoJsonProps.hasOwnProperty("recycling_type") &&
+        Object.prototype.hasOwnProperty.call(geoJsonProps, "recycling_type") &&
         geoJsonProps.recycling_type === "centre";
       this.description = geoJsonProps.description;
       this.name = geoJsonProps.name;

@@ -1,5 +1,5 @@
 import "material-design-icons-iconfont/dist/material-design-icons.css";
-import Vue from "vue";
+import Vue, { VNode } from "vue";
 import Vuetify from "vuetify";
 import App from "./App.vue";
 import router from "./router";
@@ -23,16 +23,19 @@ Vue.use(VueAnalytics, {
 });
 
 Vue.directive("click-outside", {
-  bind: function (el, binding, vnode) {
+  bind: function (el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
     el.clickOutsideEvent = function (event) {
       // exclude buttons
       if (event.target.classList.contains("popup_activator")) {
         return;
       }
       // here I check that click was outside the el and his childrens
-      if (!(el == event.target || el.contains(event.target))) {
+      if (
+        !(el == event.target || el.contains(event.target)) &&
+        binding?.expression
+      ) {
         // and if it did, call method provided in attribute value
-        vnode.context[binding.expression](event);
+        vnode?.context?.[binding?.expression](event);
       }
     };
     document.body.addEventListener("click", el.clickOutsideEvent);
@@ -45,6 +48,7 @@ Vue.directive("click-outside", {
 Vue.config.productionTip = false;
 
 import "vuetify/dist/vuetify.min.css";
+import { DirectiveBinding } from "vue/types/options";
 
 new Vue({
   i18n,
