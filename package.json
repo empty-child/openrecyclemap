@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vite",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vite build",
+    "serve": "cross-env vite",
+    "build": "cross-env vite build",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint --fix ./src --ext .js,.jsx,.ts,.tsx,.js,.vue",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"

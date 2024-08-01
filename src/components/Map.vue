@@ -132,6 +132,7 @@ export default {
       if (!data) {
         return;
       }
+      const component = this;
       const map = this.map;
       this.lastData = data;
       if (this.layer) {
@@ -177,29 +178,29 @@ export default {
         onEachFeature: function (feature, layer) {
           layer.on("click", function (ev) {
             L.DomEvent.stopPropagation(ev);
-            if (this.add_mode || this.edit_tags) {
+            if (component.add_mode || component.edit_tags) {
               return;
             }
-            if (this.selectedLayer) {
-              this.selectedLayer.setStyle({
+            if (component.selectedLayer) {
+              component.selectedLayer.setStyle({
                 weight: 1,
               });
             }
             const geoJsonProps = feature.properties;
             const sel_type = geoJsonProps.id.includes("way") ? "way" : "node";
             const sel_id = geoJsonProps.id.replace(sel_type + "/", "");
-            this.selectedLayer = layer;
-            this.selected = {
+            component.selectedLayer = layer;
+            component.selected = {
               props: geoJsonProps,
-              fractions: this.parseFractions(geoJsonProps),
+              fractions: component.parseFractions(geoJsonProps),
               node_id: sel_id,
               node_type: sel_type,
             };
-            this.selectedId = sel_id;
+            component.selectedId = sel_id;
             layer.setStyle({
               weight: 5,
             });
-            this.$router.push({
+            component.$router.push({
               name: "node",
               params: { node: sel_id, type: sel_type },
             });
@@ -391,12 +392,13 @@ export default {
       }
     },
     loadNode: function (params) {
+      const component = this;
       this.fetchNode(params, function (data) {
         if (data.elements.length > 0) {
           const element = data.elements[0];
           const node = element.type === "way" ? element.center : element;
-          this.map.setView([node.lat, node.lon], 17, { animate: false });
-          this.loadData(params);
+          component.map.setView([node.lat, node.lon], 17, { animate: false });
+          component.loadData(params);
         }
       });
     },

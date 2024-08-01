@@ -14,6 +14,8 @@ module.exports = {
     "@vue/eslint-config-prettier",
   ],
   rules: {
+    // Temporary mocking, should be removed after
     "vue/multi-word-component-names": "off",
+    "@typescript-eslint/no-this-alias": "off",
   },
 };

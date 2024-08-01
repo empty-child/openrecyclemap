@@ -1,5 +1,5 @@
 import "material-design-icons-iconfont/dist/material-design-icons.css";
-import Vue, { VNode } from "vue";
+import Vue from "vue";
 import Vuetify from "vuetify";
 import App from "./App.vue";
 import router from "./router";
@@ -23,7 +23,7 @@ Vue.use(VueAnalytics, {
 });
 
 Vue.directive("click-outside", {
-  bind: function (el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
+  bind: function (el: HTMLElement, binding: any, vnode: any) {
     el.clickOutsideEvent = function (event) {
       // exclude buttons
       if (event.target.classList.contains("popup_activator")) {
@@ -48,7 +48,6 @@ Vue.directive("click-outside", {
 Vue.config.productionTip = false;
 
 import "vuetify/dist/vuetify.min.css";
-import { DirectiveBinding } from "vue/types/options";
 
 new Vue({
   i18n,
