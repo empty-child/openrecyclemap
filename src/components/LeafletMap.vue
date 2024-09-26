@@ -168,7 +168,6 @@ export default {
   },
   created() {
     this.baseLayers = {
-      Mapbox: this.mapboxVector(),
       Mapnik: this.mapnikLayer(),
       "Mapbox sat": this.mapboxSat(),
       "ESRI sat": this.esriSat(),

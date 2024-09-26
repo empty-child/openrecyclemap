@@ -1,4 +1,23 @@
 export default class Filter {
+  [s: string]: any;
+  plastic?: boolean;
+  paper?: boolean;
+  cans?: boolean;
+  glass?: boolean;
+  glass_bottles?: boolean;
+  plastic_bags?: boolean;
+  clothes?: boolean;
+  batteries?: boolean;
+  low_energy_bulbs?: boolean;
+  plastic_bottles?: boolean;
+  hazardous_waste?: boolean;
+  scrap_metal?: boolean;
+  engine_oil?: boolean;
+  car_batteries?: boolean;
+  tyres?: boolean;
+  waste_disposal?: boolean;
+  recycling?: boolean;
+
   constructor() {
     const stored = localStorage.getItem("filter");
     if (stored) {
@@ -26,7 +45,7 @@ export default class Filter {
     this.car_batteries = false;
     this.tyres = false;
   }
-  invert(key) {
+  invert(key: string) {
     this[key] = !this[key];
     if (this[key] && key !== "waste_disposal" && key !== "recycling") {
       this.recycling = false;
@@ -38,21 +57,21 @@ export default class Filter {
   }
   enabled() {
     for (const key in this) {
-      if (this.hasOwnProperty(key) && this[key]) {
+      if (Object.prototype.hasOwnProperty.call(this, key) && this[key]) {
         return true;
       }
     }
     return false;
   }
-  fit(geoJsonProps) {
+  fit(geoJsonProps: any) {
     if (
-      geoJsonProps.hasOwnProperty("amenity") &&
+      Object.prototype.hasOwnProperty.call(geoJsonProps, "amenity") &&
       geoJsonProps["amenity"] === "waste_disposal"
     ) {
       return this.waste_disposal;
     }
     if (
-      geoJsonProps.hasOwnProperty("amenity") &&
+      Object.prototype.hasOwnProperty.call(geoJsonProps, "amenity") &&
       geoJsonProps["amenity"] === "recycling" &&
       this.recycling
     ) {
@@ -60,7 +79,7 @@ export default class Filter {
     }
     for (const key in this) {
       if (
-        !this.hasOwnProperty(key) ||
+        !Object.prototype.hasOwnProperty.call(this, key) ||
         !this[key] ||
         key === "waste_disposal" ||
         key === "recycling"
@@ -68,7 +87,10 @@ export default class Filter {
         continue;
       }
       if (
-        geoJsonProps.hasOwnProperty("recycling:" + key) &&
+        Object.prototype.hasOwnProperty.call(
+          geoJsonProps,
+          "recycling:" + key
+        ) &&
         geoJsonProps["recycling:" + key] === "yes"
       ) {
         return true;

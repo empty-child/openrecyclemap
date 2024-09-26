@@ -1,10 +1,10 @@
 import moment from "moment";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import aboutComponent from "../components/About.vue";
-import mapComponent from "../components/Map.vue";
-import loginComponent from "../components/Login.vue";
-import landComponent from "../components/Land.vue";
+import aboutComponent from "@/components/About.vue";
+import mapComponent from "@/components/Map.vue";
+import loginComponent from "@/components/Login.vue";
+import landComponent from "@/components/Land.vue";
 
 moment.locale("ru");
 

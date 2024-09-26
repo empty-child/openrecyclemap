@@ -36,7 +36,7 @@ export default {
   methods: {
     processParams: function (route) {
       if (route.name === "about") {
-        console.log('about')
+        console.log("about");
       }
     },
     fixHeight: function () {

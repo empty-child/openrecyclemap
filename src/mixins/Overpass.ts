@@ -1,18 +1,20 @@
+import L from "leaflet";
 import OverpassQuery from "../osm/OverpassQuery";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   data: function () {
     return {
-      bounds: null,
+      bounds: null as L.LatLngBounds | null,
     };
   },
   methods: {
-    boundsToGeojson: function () {
+    boundsToGeojson: function (): any {
       if (!this.bounds) {
         return {};
       }
-      const sw = this.bounds._southWest;
-      const ne = this.bounds._northEast;
+      const sw = this.bounds.getSouthWest();
+      const ne = this.bounds.getNorthEast();
       return {
         type: "Feature",
         geometry: {
@@ -28,18 +30,18 @@ export default {
         },
       };
     },
-    bboxToString: function (bounds) {
+    bboxToString: function (bounds: L.LatLngBounds) {
       return (
-        bounds._southWest.lat +
+        bounds.getSouthWest().lat +
         "," +
-        bounds._southWest.lng +
+        bounds.getSouthWest().lng +
         "," +
-        bounds._northEast.lat +
+        bounds.getNorthEast().lat +
         "," +
-        bounds._northEast.lng
+        bounds.getNorthEast().lng
       );
     },
-    bboxFromCenter: function (latlon) {
+    bboxFromCenter: function (latlon: { lat: number; lng: number }) {
       const bounds = L.latLngBounds([
         [latlon.lat - 0.05, latlon.lng - 0.1],
         [latlon.lat + 0.05, latlon.lng + 0.1],
@@ -47,7 +49,7 @@ export default {
       this.bounds = bounds;
       return this.bboxToString(bounds);
     },
-    buildQuery: function (center) {
+    buildQuery: function (center: { lat: number; lng: number }) {
       const bbox = this.bboxFromCenter(center);
       const query = new OverpassQuery();
       const tags = [
@@ -56,21 +58,28 @@ export default {
       ];
       return query.nodeByTags(tags, bbox).body;
     },
-    fetchAmenity: function (center, callback, errorCallback) {
+    fetchAmenity: function (
+      center: { lat: number; lng: number },
+      callback: () => any,
+      errorCallback: () => any
+    ) {
       fetch(import.meta.env.VITE_APP_OVERPASS_URL, {
         method: "POST",
         body: this.buildQuery(center),
       })
         .then(function (response) {
           if (!response.ok) {
-            throw new Error(response.status);
+            throw new Error(String(response.status));
           }
           return response.json();
         })
         .then(callback)
         .catch(errorCallback);
     },
-    fetchNode: function (params, callback) {
+    fetchNode: function (
+      params: { type: string; node: string },
+      callback: () => any
+    ) {
       const query = new OverpassQuery();
       if (params.type === "way") {
         query.wayById(params.node);
@@ -83,11 +92,11 @@ export default {
       })
         .then(function (response) {
           if (!response.ok) {
-            throw new Error(response.status);
+            throw new Error(String(response.status));
           }
           return response.json();
         })
         .then(callback);
     },
   },
-};
+});

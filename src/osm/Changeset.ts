@@ -1,5 +1,7 @@
 export default class Changeset {
-  constructor(changeset_name) {
+  name: string;
+
+  constructor(changeset_name: string) {
     this.name = changeset_name;
   }
   get xml() {

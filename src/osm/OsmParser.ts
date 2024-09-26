@@ -1,5 +1,7 @@
 export default class OsmParser {
-  constructor(xmlDoc) {
+  doc: XMLDocument;
+
+  constructor(xmlDoc: XMLDocument) {
     this.doc = xmlDoc;
   }
   supportedTags() {
@@ -27,21 +29,21 @@ export default class OsmParser {
   }
   get osm_type() {
     const nodeEl = this.doc.documentElement.firstElementChild;
-    return nodeEl.tagName;
+    return nodeEl?.tagName;
   }
   get version() {
     const nodeEl = this.doc.documentElement.firstElementChild;
-    return nodeEl.getAttribute("version");
+    return nodeEl?.getAttribute("version");
   }
   get refs() {
-    const refs = [];
+    const refs: (string | null)[] = [];
     this.doc
       .querySelectorAll("nd")
       .forEach((nd) => refs.push(nd.getAttribute("ref")));
     return refs;
   }
   get tags() {
-    const notSupportedTags = {};
+    const notSupportedTags: Record<string, string | null> = {};
     const supportedTags = this.supportedTags();
     this.doc.querySelectorAll("tag").forEach(function (tag) {
       const key = tag.getAttribute("k");

@@ -1,7 +1,20 @@
 import convert from "xml-js";
 
 export default class OsmBuilder {
-  constructor(node_type, latlon) {
+  node: {
+    type: string;
+    name: string;
+    elements: any[];
+    attributes: Partial<{
+      lat: string;
+      lon: string;
+      changeset: string;
+      id: string;
+      version: string;
+    }>;
+  };
+
+  constructor(node_type: string, latlon: { lat: string; lng: string }) {
     this.node = {
       type: "element",
       name: node_type,
@@ -13,11 +26,11 @@ export default class OsmBuilder {
       this.node.attributes.lon = latlon.lng;
     }
   }
-  setChangeset(id) {
+  setChangeset(id: string) {
     this.node.attributes.changeset = id;
     return this;
   }
-  setExisting(node_id, version) {
+  setExisting(node_id: string, version: string) {
     if (node_id) {
       this.node.attributes.id = node_id;
     }
@@ -26,8 +39,8 @@ export default class OsmBuilder {
     }
     return this;
   }
-  setRefs(refs) {
-    refs.forEach((ref) =>
+  setRefs(refs: any) {
+    refs.forEach((ref: any) =>
       this.node.elements.push({
         type: "element",
         name: "nd",
@@ -35,9 +48,9 @@ export default class OsmBuilder {
       })
     );
   }
-  setTags(tags) {
+  setTags(tags: any) {
     for (const key in tags) {
-      if (tags.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(tags, key)) {
         this.node.elements.push({
           type: "element",
           name: "tag",

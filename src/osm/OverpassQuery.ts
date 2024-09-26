@@ -1,16 +1,18 @@
 export default class OverpassQuery {
+  query: string;
+
   constructor() {
     this.query = "";
   }
-  nodeById(id) {
+  nodeById(id: string) {
     this.query = "  node(" + id + ");\n";
     return this;
   }
-  wayById(id) {
+  wayById(id: string) {
     this.query = "  way(" + id + ");\n";
     return this;
   }
-  nodeByTags(tags, bbox) {
+  nodeByTags(tags: Array<{ k: string; v: string }>, bbox: string) {
     tags.forEach(
       (tag) =>
         (this.query +=
